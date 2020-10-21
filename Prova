@@ -1,1 +1,51 @@
 
+mysql -u root -p
+
+drop database if exists prova;
+create database prova;
+use prova;
+
+-- iniciando tabelas FORTES
+create table Bebidas(
+    cod integer primary key auto_increment not null,
+    nome varchar(40) not null,
+    tipo varchar(200) not null,
+    preco decimal(6,2) not null,
+    volume integer not null
+);
+
+-- tabela FRACA e o RELACIONAMENTO
+create table Prateleiras(
+    numPrateleira integer primary key auto_increment not null,
+    dataAquisicao Date not null,
+    posicaoDeposito varchar(40) not null,
+    pesoSuportado integer not null,
+    constraint fkBebidasPrateleiras 
+    foreign key (codBebidas)
+    references Bebidas(cod)
+    on delete cascade
+    on update cascade
+);
+
+--Para popular (Preencer o Banco de dados com Registros) e testar o Banco de dados DML
+insert into Bebidas values
+(default,"Pinga","Alcoolica",5.00,1000),
+(default,"Uisque","Alcoolica",50.00,500),
+(default,"Suco","NaoAlcoolico",2.00,800),
+(default,"h2o","NaoAlcoolico",4.00,900),
+
+
+insert into Prateleiras values (1,"2020-06-28","centro",100);
+insert into Prateleiras values (2,"2020-08-30","esquerda",10);
+insert into Prateleiras values (3,"2020-09-01","direita",20);
+insert into Prateleiras values (4,"2020-11-13","centro",100);
+
+
+describe Bebidas;
+describe Prateleiras;
+
+Select * from Bebidas;
+Select * , preco * quantidade as subtotal from Bebidas;
+
+Select * from Prateleiras;
+Select * , preco * quantidade as subtotal from Prateleiras;
